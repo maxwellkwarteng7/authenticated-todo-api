@@ -17,6 +17,9 @@ app.use(cors(corsOptions));
 app.use('/api', mainRouter); 
 
 
+// Hello bros what is going on 
+
+
 
 const port = process.env.PORT || 8000; 
 
