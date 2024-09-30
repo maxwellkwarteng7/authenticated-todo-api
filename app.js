@@ -11,9 +11,8 @@ const corsOptions = {
 
 //all imports here 
 const mainRouter = require('./routes/main');
-const errorhandler = require('./middleware/errorhandler');
-const NotExist = require('./errors/NotExist');
-
+const { sequelize } = require('./models');
+const { errorHandlingMiddleWare } = require('./middleware/errorhandler'); 
 
 
 //middlewares 
@@ -24,16 +23,16 @@ app.use('/api', mainRouter);
 
 
 
-
 // the error middleware 
-app.use(NotExist);
-app.use(errorhandler);
+// notFo
+// app.use(errorHandlingMiddleWare);
 
 
 const port = process.env.PORT || 8000;
 
 
 app.listen(port, async () => {
+    await sequelize.authenticate().then(() => console.log('database connected')).catch((error) => console.log(error));
     console.log(`app is listening on port ${port}`);
 });
 

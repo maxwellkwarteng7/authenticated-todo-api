@@ -5,9 +5,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    async validatePassword(password) {
-      return await bcrypt.compare(password, this.password); 
-    }
+   
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -37,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+
+  User.prototype.validatePassword = async (password , hash ) => {
+    const isMatch = await bcrypt.compare(password, hash); 
+    return isMatch; 
+  }
   
   return User;
 };
