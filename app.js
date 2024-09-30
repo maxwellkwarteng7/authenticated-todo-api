@@ -11,9 +11,10 @@ const corsOptions = {
 
 //all imports here 
 const mainRouter = require('./routes/main');
-const sequelizeInstance = require('./config/database');
 const errorhandler = require('./middleware/errorhandler');
 const NotExist = require('./errors/NotExist');
+
+
 
 //middlewares 
 app.use(express.json());
@@ -33,7 +34,6 @@ const port = process.env.PORT || 8000;
 
 
 app.listen(port, async () => {
-    await sequelizeInstance.authenticate().then(() => console.log('the database has  connected ')).catch((e) => console.log(e.message));
     console.log(`app is listening on port ${port}`);
 });
 

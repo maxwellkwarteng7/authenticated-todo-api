@@ -5,6 +5,9 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
+    async validatePassword(password) {
+      return await bcrypt.compare(password, this.password); 
+    }
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,45 +17,26 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init(
-    {
-      username: {
-        type: DataTypes.STRING, 
-        unique: true, 
-        validate: {
-          notEmpty: true, 
-        }
-      }, 
-      password: {
-        type: DataTypes.STRING, 
-        validate: {
-          notEmpty : true 
-        }
-      }
-    }, 
-   {
+  User.init({
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    }
+  }, {
     sequelize,
-     modelName: 'User',
-    
-     hooks: {
-      //  before the user is saved hash the password 
-       beforeCreate: async (user ) => {
-         const salt = bcrypt.genSalt(10); 
-         user.password = bcrypt.hash(user.password, salt); 
-       }, 
-       //  if there's a change in the password or password is update hash the new one 
-       beforeUpdate: async (user) => {
-         if (user.changed('password')) {
-         const salt = bcrypt.genSalt(10); 
-           user.password = bcrypt.hash(user.password, salt); 
-         }
-       }
-     }
-    });
+    modelName: 'User',
+    freezeTableName: true,
+    hooks: {
+      beforeCreate: async (user) => {
+        const salt = await bcrypt.genSalt(10); 
+        user.password = await bcrypt.hash(user.password, salt); 
+      }
+    }
+  });
   
-  // adding a protype method to check if password is valid 
-  User.prototype.validataPassword =  async(password) => {
-    return bcrypt.compare(password, this.password); 
-  }
   return User;
 };
