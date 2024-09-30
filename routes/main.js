@@ -1,12 +1,10 @@
 const express = require('express'); 
+const { register } = require('../controllers/main');
 
 const router = express.Router(); 
 
 
-router.get('/new', function (req, res) {
-   
-    res.status(200).json({msg : "Hello you hit this route"}); 
-}); 
+router.get('/register', register); 
 
 
 
