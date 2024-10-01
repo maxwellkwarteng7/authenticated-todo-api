@@ -13,12 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Todo.belongsTo(models.User, {
         foreignKey: 'userId',
-        as: 'userTasks'
+        as: 'taskOwner'
       }); 
     }
   }
   Todo.init({
-    todo: DataTypes.STRING
+    todo: DataTypes.STRING, 
+    userId: {
+      type: DataTypes.INTEGER, 
+      allowNull: false 
+    }
   }, {
     sequelize,
     modelName: 'Todo',
