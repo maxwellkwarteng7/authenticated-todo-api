@@ -1,15 +1,14 @@
 const express = require('express');
+const { dashboard, createTask, deleteTodo } = require('../controllers/todo');
 
 const router = express.Router();
 
 
-router.get('/dashboard', (req, res) => {
-    const { userId } = req;
-    
+router.get('/dashboard', dashboard);
 
-    res.status(200).json({ msg: "this user is authenticated" });
-});
+router.post('/create-todo', createTask); 
 
+router.delete('/delete-todo/:id', deleteTodo);
 
 
 module.exports = router; 
