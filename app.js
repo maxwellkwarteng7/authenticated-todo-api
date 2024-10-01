@@ -11,8 +11,10 @@ const corsOptions = {
 
 //all imports here 
 const mainRouter = require('./routes/main');
+const dashboardRouter = require('./routes/dashboard'); 
 const { sequelize } = require('./models');
 const { errorHandlingMiddleWare } = require('./middleware/errorhandler'); 
+const authenticator = require('./middleware/authenticator');
 
 
 //middlewares 
@@ -20,6 +22,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use('/api', mainRouter);
+app.use('/api', authenticator ,  dashboardRouter); 
 
 
 
