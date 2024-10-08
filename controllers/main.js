@@ -41,7 +41,7 @@ const login = wrapper(async (req, res) => {
     }
 
     // check if the passwords match 
-    console.log("this is where it reached");
+  
     const isMatch = user && (await user.validatePassword(password, user.password));
     console.log(isMatch);
 
@@ -51,7 +51,7 @@ const login = wrapper(async (req, res) => {
 
         res.status(StatusCodes.OK).json({ token: token });
     } else {
-        res.status(StatusCodes.UNAUTHORIZED).json({ msg: 'Invalid credential , please try again' });
+        res.status(StatusCodes.UNAUTHORIZED).json({ msg: 'Invalid credentials , please try again' });
     }
 });
 
