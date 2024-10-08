@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const app = express();
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:4200",
 };
 
 //all imports here

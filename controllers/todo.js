@@ -13,7 +13,16 @@ const dashboard = wrapper(async (req, res) => {
         as: "Tasks",
       },
     ],
-  });
+    order: [
+      [{ 
+        model: Todo, 
+        as : 'Tasks'
+      },
+        'createdAt',
+        'DESC'
+      ]
+    ]
+  }); 
   res.status(StatusCodes.OK).json(user.Tasks);
 });
 
